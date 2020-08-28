@@ -1,0 +1,24 @@
+﻿
+.MarlonPhoto {
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+}
+
+.conhecimentos {
+    background-color: transparent;
+    color: white;
+    width: fit-content;
+    margin: auto;
+    padding-top: 8px;
+    padding-right: 2px;
+    text-align: center;
+    font-family: Berlin;
+    font-size: 1.0em;
+}
+
+img.skills {
+    size: unset;
+    width: 70px;
+    height: 70px;
+}
