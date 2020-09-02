@@ -1,45 +1,121 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
+    <meta name="description" content="Desenvolvedor de software. Este é meu espaço para compartilhar um pouco do que tenho aprendido. Seja Bem-vindo!">
+    <meta name="keywords" content="Developer,Software,Desenvolvedor,Programador">
+    <meta name="author" content="Marlon Braga">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - marlonbraga.dev</title>
+    <title>Marlon Braga DEV</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/generalStyle.css" />
+    <link rel="stylesheet" href="~/css/sobre.css" />
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <style>
+        .fakeimg {
+            height: 300px;
+            background: #aaa;
+        }
+
+        a.navMain {
+            font-family: Berlin;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">marlonbraga.dev</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+    <div class="jumbotron text-center header">
+        <div class="headerBox">
+            <h1>MARLON BRAGA</h1>
+            <p>Desenvolvedor de software</p>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark sticky-top" style="top: -1px;">
+        <div class="container bg-dark">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link navMain disabled" asp-area="" asp-controller="Home" asp-action="Projetos">PROJETOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navMain disabled" asp-area="" asp-controller="Home" asp-action="Blog">BLOG</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Sobre">SOBRE MIM</a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+            </nav>
+        </div>
+    </div>
+    <div class="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - marlonbraga.dev - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="footer border-top footer text-muted">
+        <div class="container" style="padding: 100px 0px 30px 0px;">
+            <div class="row">
+                <div class="col-md-6 darkTheme">
+                    <div class="padding-left">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="footerIcon" href="mailto:marlon@marlonbraga.com.br"><i class='fas fa-envelope'></i></a>
+                                </td>
+                                <td class="left"><a class="footer-link" href="mailto:marlon@marlonbraga.com.br">marlon@marlonbraga.com.br</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="footerIcon" href="tel:+55(21)995009727"><i class='fab fa-whatsapp'></i></a>
+                                </td>
+                                <td class="left">
+                                    <a class="footer-link" href="tel:+55(21)995009727"><text class="notas">+55(21)</text> 995 009 727</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 darkTheme">
+                    <div class="padding-left">
+                        <table>
+                            <tr>
+                                <td colspan="5">
+                                    <a class="footerIcon" href="https://www.google.com/maps/place/Rio+de+Janeiro,+RJ/-22.9593609,-43.1874396,15z/data=!4m5!3m4!1s0x9bde559108a05b:0x50dc426c672fd24e!8m2!3d-22.9068467!4d-43.1728965"><i class='fas fa-map-marker-alt'></i></a>
+                                    <a class="footer-link" href="https://www.google.com/maps/place/Rio+de+Janeiro,+RJ/-22.9593609,-43.1874396,15z/data=!4m5!3m4!1s0x9bde559108a05b:0x50dc426c672fd24e!8m2!3d-22.9068467!4d-43.1728965">&nbsp;&nbsp;&nbsp;&nbsp;Rio de Janeiro - RJ</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="footerIcon" href="https://www.linkedin.com/in/marlonbraga/"><i class='fab fa-linkedin'></i></a>
+                                </td>
+                                <td>
+                                    <a class="footerIcon" href="https://github.com/marlonbraga"><i class='fab fa-github'></i></a>
+                                </td>
+                                <td>
+                                    <a class="footerIcon" href="https://twitter.com/Marlon_Braga0"><i class='fab fa-twitter'></i></a>
+                                </td>
+                                <td>
+                                    <a class="footerIcon" href="https://www.youtube.com/channel/UCHNWeE1DJ0HqoE9KrEx1agg"><i class='fab fa-youtube'></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
