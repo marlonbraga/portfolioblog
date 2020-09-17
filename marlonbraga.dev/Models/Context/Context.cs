@@ -7,5 +7,7 @@ using System.Threading.Tasks;
 namespace marlonbraga.dev.Models.Context {
 	public class Context : DbContext {
 		public Context(DbContextOptions<Context> options) : base(options){}
+
+		public DbSet<Post> Posts { get; set; }
 	}
 }
