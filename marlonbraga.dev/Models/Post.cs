@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace marlonbraga.dev.Models {
 	[Table("post")]
@@ -18,6 +16,7 @@ namespace marlonbraga.dev.Models {
 		public string TumbNail { get; set; }
 		public string Description { get; set; }
 		public string Content { get; set; }
-		public string Tags { get; set; }
+
+		public virtual List<PostTag> PostTags { get; set; }
 	}
 }

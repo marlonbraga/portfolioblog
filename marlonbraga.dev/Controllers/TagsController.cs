@@ -10,23 +10,22 @@ using marlonbraga.dev.Models.Context;
 
 namespace marlonbraga.dev
 {
-    public class PostsController : Controller
+    public class TagsController : Controller
     {
         private readonly Context _context;
 
-        public PostsController(Context context)
+        public TagsController(Context context)
         {
             _context = context;
         }
 
-        // GET: Posts
+        // GET: Tags
         public async Task<IActionResult> Index()
         {
-
-            return View(await _context.Posts.ToListAsync());
+            return View(await _context.Tags.ToListAsync());
         }
 
-        // GET: Posts/Details/5
+        // GET: Tags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,54 +33,39 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-			var post = await _context.Posts
-				.FirstOrDefaultAsync(m => m.IdPost == id);
-
-			List<PostTag> postTags = _context.PostTags.Where(i => i.IdPost == id).ToList();
-            List<Tag> Tags = new List<Tag>();
-            foreach(var postTag in postTags) {
-                Tag tag = _context.Tags.Where(i => i.IdTag == postTag.IdTag).FirstOrDefault();
-                Tags.Add(tag);
-            }
-            ViewBag.Tags = Tags;
-            if (post == null)
+            var tag = await _context.Tags
+                .FirstOrDefaultAsync(m => m.IdTag == id);
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(tag);
         }
 
-        // GET: Posts/Create
+        // GET: Tags/Create
         public IActionResult Create()
         {
-            //List<PostTag> postTags = _context.PostTags.OrderBy(i => i.IdPost).ToList();
-            //postTags.Insert(0, new PostTag() {
-            //    IdPost = 0,
-            //    Title = "Selecione um título"
-            //});
-            ////var postTags = _context.PostTags.Where(i => i.IdPost)
-
             return View();
         }
 
-        // POST: Posts/Create
+        // POST: Tags/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Create([Bind("IdTag,Name")] Tag tag)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
+                _context.Add(tag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(tag);
         }
 
-        // GET: Posts/Edit/5
+        // GET: Tags/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,22 +73,22 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
             {
                 return NotFound();
             }
-            return View(post);
+            return View(tag);
         }
 
-        // POST: Posts/Edit/5
+        // POST: Tags/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTag,Name")] Tag tag)
         {
-            if (id != post.IdPost)
+            if (id != tag.IdTag)
             {
                 return NotFound();
             }
@@ -113,12 +97,12 @@ namespace marlonbraga.dev
             {
                 try
                 {
-                    _context.Update(post);
+                    _context.Update(tag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.IdPost))
+                    if (!TagExists(tag.IdTag))
                     {
                         return NotFound();
                     }
@@ -129,10 +113,10 @@ namespace marlonbraga.dev
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(tag);
         }
 
-        // GET: Posts/Delete/5
+        // GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,30 +124,30 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .FirstOrDefaultAsync(m => m.IdPost == id);
-            if (post == null)
+            var tag = await _context.Tags
+                .FirstOrDefaultAsync(m => m.IdTag == id);
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(tag);
         }
 
-        // POST: Posts/Delete/5
+        // POST: Tags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
+            var tag = await _context.Tags.FindAsync(id);
+            _context.Tags.Remove(tag);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int id)
+        private bool TagExists(int id)
         {
-            return _context.Posts.Any(e => e.IdPost == id);
+            return _context.Tags.Any(e => e.IdTag == id);
         }
     }
 }

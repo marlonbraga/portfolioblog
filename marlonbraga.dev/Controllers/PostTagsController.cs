@@ -10,23 +10,23 @@ using marlonbraga.dev.Models.Context;
 
 namespace marlonbraga.dev
 {
-    public class PostsController : Controller
+    public class PostTagsController : Controller
     {
         private readonly Context _context;
 
-        public PostsController(Context context)
+        public PostTagsController(Context context)
         {
             _context = context;
         }
 
-        // GET: Posts
+        // GET: PostTags
         public async Task<IActionResult> Index()
         {
-
-            return View(await _context.Posts.ToListAsync());
+            var context = _context.PostTags.Include(p => p.Post).Include(p => p.Tag);
+            return View(await context.ToListAsync());
         }
 
-        // GET: Posts/Details/5
+        // GET: PostTags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,54 +34,45 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-			var post = await _context.Posts
-				.FirstOrDefaultAsync(m => m.IdPost == id);
-
-			List<PostTag> postTags = _context.PostTags.Where(i => i.IdPost == id).ToList();
-            List<Tag> Tags = new List<Tag>();
-            foreach(var postTag in postTags) {
-                Tag tag = _context.Tags.Where(i => i.IdTag == postTag.IdTag).FirstOrDefault();
-                Tags.Add(tag);
-            }
-            ViewBag.Tags = Tags;
-            if (post == null)
+            var postTag = await _context.PostTags
+                .Include(p => p.Post)
+                .Include(p => p.Tag)
+                .FirstOrDefaultAsync(m => m.IdPost == id);
+            if (postTag == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(postTag);
         }
 
-        // GET: Posts/Create
+        // GET: PostTags/Create
         public IActionResult Create()
         {
-            //List<PostTag> postTags = _context.PostTags.OrderBy(i => i.IdPost).ToList();
-            //postTags.Insert(0, new PostTag() {
-            //    IdPost = 0,
-            //    Title = "Selecione um título"
-            //});
-            ////var postTags = _context.PostTags.Where(i => i.IdPost)
-
+            ViewData["IdPost"] = new SelectList(_context.Posts, "IdPost", "Title");
+            ViewData["IdTag"] = new SelectList(_context.Tags, "IdTag", "Name");
             return View();
         }
 
-        // POST: Posts/Create
+        // POST: PostTags/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Create([Bind("IdTag,IdPost")] PostTag postTag)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
+                _context.Add(postTag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            ViewData["IdPost"] = new SelectList(_context.Posts, "IdPost", "Title", postTag.IdPost);
+            ViewData["IdTag"] = new SelectList(_context.Tags, "IdTag", "Name", postTag.IdTag);
+            return View(postTag);
         }
 
-        // GET: Posts/Edit/5
+        // GET: PostTags/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,22 +80,24 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
+            var postTag = await _context.PostTags.FindAsync(id);
+            if (postTag == null)
             {
                 return NotFound();
             }
-            return View(post);
+            ViewData["IdPost"] = new SelectList(_context.Posts, "IdPost", "Title", postTag.IdPost);
+            ViewData["IdTag"] = new SelectList(_context.Tags, "IdTag", "Name", postTag.IdTag);
+            return View(postTag);
         }
 
-        // POST: Posts/Edit/5
+        // POST: PostTags/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTag,IdPost")] PostTag postTag)
         {
-            if (id != post.IdPost)
+            if (id != postTag.IdPost)
             {
                 return NotFound();
             }
@@ -113,12 +106,12 @@ namespace marlonbraga.dev
             {
                 try
                 {
-                    _context.Update(post);
+                    _context.Update(postTag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.IdPost))
+                    if (!PostTagExists(postTag.IdPost))
                     {
                         return NotFound();
                     }
@@ -129,10 +122,12 @@ namespace marlonbraga.dev
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            ViewData["IdPost"] = new SelectList(_context.Posts, "IdPost", "Title", postTag.IdPost);
+            ViewData["IdTag"] = new SelectList(_context.Tags, "IdTag", "Name", postTag.IdTag);
+            return View(postTag);
         }
 
-        // GET: Posts/Delete/5
+        // GET: PostTags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,30 +135,32 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-            var post = await _context.Posts
+            var postTag = await _context.PostTags
+                .Include(p => p.Post)
+                .Include(p => p.Tag)
                 .FirstOrDefaultAsync(m => m.IdPost == id);
-            if (post == null)
+            if (postTag == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(postTag);
         }
 
-        // POST: Posts/Delete/5
+        // POST: PostTags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
+            var postTag = await _context.PostTags.FindAsync(id);
+            _context.PostTags.Remove(postTag);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int id)
+        private bool PostTagExists(int id)
         {
-            return _context.Posts.Any(e => e.IdPost == id);
+            return _context.PostTags.Any(e => e.IdPost == id);
         }
     }
 }

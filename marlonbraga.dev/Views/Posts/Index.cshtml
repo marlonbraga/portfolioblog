@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Content)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tags)
+                @Html.DisplayNameFor(model => model.PostTags)
             </th>
             <th></th>
         </tr>
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tags)
+                @Html.DisplayFor(modelItem => item.PostTags)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPost">Edit</a> |
