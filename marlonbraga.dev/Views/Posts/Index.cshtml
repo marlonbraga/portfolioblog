@@ -40,7 +40,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (Post item in ViewBag.Posts) {//viewbag of list of posts
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PublicationDate)
@@ -58,7 +58,8 @@
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PostTags)
+                @foreach(Tag tag in item.Tags)
+                    @Html.DisplayFor(modelItem => tag.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPost">Edit</a> |
