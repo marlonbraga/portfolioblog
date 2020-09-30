@@ -6,53 +6,72 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
+    <link rel="stylesheet" href="~/css/CreateAndEdit.css" />
+    <script src="https://cdn.tiny.cloud/1/qwe97nvfgyx0gx3aehbk6urvlwhvlljfr2cgu24xyivowxk2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 </head>
 <body>
+    <div class="container">
+        <h4>Publicar Post</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="Title" class="h1 form-control" value="Título"/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Description" class="h5 form-control" value="Descrição" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group input-group mb-3">
+                        @*<div class="input-group-prepend">
+                            <span class="input-group-text"><i class='fas fa-image'></i></span>
+                        </div>*@
+                        <input asp-for="TumbNail" class="form-control" value="https://via.placeholder.com/192x108.png"/>
+                        @*<input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Escolher imagem</label>*@
+                        <span asp-validation-for="TumbNail" class="text-danger"></span>
+                    </div>
 
-<h4>Post</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PublicationDate" class="control-label"></label>
-                <input asp-for="PublicationDate" class="form-control" />
-                <span asp-validation-for="PublicationDate" class="text-danger"></span>
+                    @*<div class="form-group input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class='fas fa-tags'></i></span>
+                        </div>
+                        <input asp-for="Tags" class="form-control" />
+                        <span asp-validation-for="Tags" class="text-danger"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <input asp-for="PublicationDate" class="form-control"/>
+                        <span asp-validation-for="PublicationDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Content" class="form-control" />
+                        @*<textarea id="mytextarea" asp-for="Content" class="form-control">Hello, World!</textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group" style="text-align:center;">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        @*<a class="btn btn-outline-primary" asp-action="Index">Voltar</a>*@
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TumbNail" class="control-label"></label>
-                <input asp-for="TumbNail" class="form-control" />
-                <span asp-validation-for="TumbNail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 </body>
 </html>

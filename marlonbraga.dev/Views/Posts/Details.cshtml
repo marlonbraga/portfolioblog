@@ -17,18 +17,16 @@
         <h5>
             @Html.DisplayFor(model => model.Description)
         </h5>
-        <p>
+        <p style="text-align:right;">
             @Html.DisplayFor(model => model.PublicationDate)
+            <span class="badge badge-primary">C#</span>
+            <span class="badge badge-info">Design Patterns</span>
+            <span class="badge badge-dark">Entity</span>
         </p>
 
         <img class="card-img-top" src="@Html.DisplayFor(model => model.TumbNail)" />
         <p>
             @Html.DisplayFor(model => model.Content)
-        </p>
-        <p>
-            <span class="badge badge-primary">C#</span>
-            <span class="badge badge-info">Design Patterns</span>
-            <span class="badge badge-dark">Entity</span>
         </p>
         <hr />
         <div>

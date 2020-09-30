@@ -9,7 +9,7 @@ namespace marlonbraga.dev.Models {
 		[Key, Display(Name = "Id")]
 		public int IdPost { get; set; }
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
 		public DateTime? PublicationDate { get; set; }
 		[Required]
 		public string Title { get; set; }

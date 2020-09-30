@@ -58,6 +58,7 @@ namespace marlonbraga.dev
         {
             if (ModelState.IsValid)
             {
+                //post.PublicationDate = post.PublicationDate.Value.ToUniversalTime();
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
