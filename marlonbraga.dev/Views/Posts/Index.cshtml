@@ -1,74 +1,67 @@
 ﻿@model IEnumerable<marlonbraga.dev.Models.Post>
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PublicationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TumbNail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostTags)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (Post item in ViewBag.Posts) {//viewbag of list of posts
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TumbNail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @foreach(Tag tag in item.Tags)
-                    @Html.DisplayFor(modelItem => tag.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPost">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPost">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPost">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</body>
-</html>
+<div class="container">
+    <div class="d-flex flex-wrap align-content-center align-items-center">
+        @foreach(var item in Model) {
+        <a asp-action="Details" asp-route-id="@item.IdPost">
+            <div class="card" style="width:250px">
+                <img class="card-img-top" src="@Html.DisplayFor(model => item.TumbNail)" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(model => item.Title)</h4>
+                    <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
+                </div>
+            </div>
+        </a>
+        }
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PublicationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.TumbNail)">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublicationDate)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.IdPost">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>*@
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.IdPost"><i class='fas fa-info-circle'></i></a> |
+                        <a asp-action="Edit" asp-route-id="@item.IdPost"><i class='fas fa-tools'></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdPost"><i class='fas fa-trash-alt'></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a type="button" class="btn btn-success" asp-action="Create">Create New</a>
+    </p>
+</div>

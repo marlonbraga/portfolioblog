@@ -1,0 +1,14 @@
+﻿h1 {
+    text-align: center;
+}
+h5 {
+    text-align: center;
+}
+source-code {
+    font-family: Consolas,"courier new";
+    font-size: 105%;
+    color: white;
+    background-color: #252526;
+    padding-left: 4px;
+    padding-right: 4px;
+}

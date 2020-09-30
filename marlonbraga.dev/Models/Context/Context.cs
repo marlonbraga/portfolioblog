@@ -12,7 +12,7 @@ namespace marlonbraga.dev.Models.Context {
 		public DbSet<PostTag> PostTags { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<PostTag>()
-                .HasKey(t => new { t.IdPost, t.IdTag });
+                .HasKey(pt => new { pt.IdPost, pt.IdTag });
             modelBuilder.Entity<PostTag>()
                 .HasOne(pt => pt.Post)
                 .WithMany(p => p.PostTags)

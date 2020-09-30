@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using marlonbraga.dev.Models;
 using marlonbraga.dev.Models.Context;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace marlonbraga.dev
 {
@@ -23,56 +22,6 @@ namespace marlonbraga.dev
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var query = _context.PostTags
-                .Join(
-                    _context.Posts,
-                    pt => pt.IdPost,
-                    p => p.IdPost,   
-                    (pt,p) => new {
-                        IdPost = p.IdPost,
-                        PublicationDate = p.PublicationDate,
-                        Title = p.Title,
-                        TumbNail = p.TumbNail,
-                        Description = p.Description,
-                        IdTag = pt.IdTag
-                    }
-                )
-				.Join(
-					_context.Tags,
-					join => join.IdTag,
-					t => t.IdTag,
-					(join, t) => new  {
-                        IdPost = join.IdPost,
-                        PublicationDate = join.PublicationDate,
-                        Title = join.Title,
-                        TumbNail = join.TumbNail,
-                        Description = join.Description,
-                        IdTag = join.IdTag,
-                        Tag = t.Name,
-                    }
-				)
-				.ToList();
-			List<Post> Posts = new List<Post>();
-            Post AuxiliarPost = new Post(-1);
-            foreach(var postTag in query) {
-                if(postTag.IdPost != AuxiliarPost.IdPost)
-                {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
-                    AuxiliarPost = new Post(postTag.IdPost);
-                    AuxiliarPost.Tags.Add(tag);
-                    AuxiliarPost.Description = postTag.Description;
-                    AuxiliarPost.Title = postTag.Title;
-                    AuxiliarPost.PublicationDate = postTag.PublicationDate;
-                    AuxiliarPost.TumbNail = postTag.TumbNail;
-                    Posts.Add(AuxiliarPost);
-                }
-                else
-                {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
-                    Posts.LastOrDefault().Tags.Add(tag);
-                }
-            }
-            ViewBag.Posts = Posts;
             return View(await _context.Posts.ToListAsync());
         }
 
@@ -84,18 +33,8 @@ namespace marlonbraga.dev
                 return NotFound();
             }
 
-			var post = await _context.Posts
-				.FirstOrDefaultAsync(m => m.IdPost == id);
-
-			List<PostTag> postTags = _context.PostTags
-                .Where(i => i.IdPost == id).ToList();
-            List<Tag> Tags = new List<Tag>();
-            foreach(var postTag in postTags) {
-                Tag tag = _context.Tags.Where(i => i.IdTag == postTag.IdTag).FirstOrDefault();
-                Tags.Add(tag);
-            }
-            ViewBag.Tags = Tags;
-
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(m => m.IdPost == id);
             if (post == null)
             {
                 return NotFound();
@@ -107,13 +46,6 @@ namespace marlonbraga.dev
         // GET: Posts/Create
         public IActionResult Create()
         {
-            //List<PostTag> postTags = _context.PostTags.OrderBy(i => i.IdPost).ToList();
-            //postTags.Insert(0, new PostTag() {
-            //    IdPost = 0,
-            //    Title = "Selecione um título"
-            //});
-            ////var postTags = _context.PostTags.Where(i => i.IdPost)
-
             return View();
         }
 
