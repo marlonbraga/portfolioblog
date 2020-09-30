@@ -35,35 +35,31 @@
                         <input asp-for="Description" class="h5 form-control" value="Descrição" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group input-group mb-3">
-                        @*<div class="input-group-prepend">
-                            <span class="input-group-text"><i class='fas fa-image'></i></span>
-                        </div>*@
+                    <div class="form-group">
                         <input asp-for="TumbNail" class="form-control" value="https://via.placeholder.com/192x108.png"/>
                         @*<input type="file" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" for="customFile">Escolher imagem</label>*@
                         <span asp-validation-for="TumbNail" class="text-danger"></span>
                     </div>
 
-                    @*<div class="form-group input-group mb-3">
+                    <div class="form-group input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class='fas fa-tags'></i></span>
                         </div>
                         <input asp-for="Tags" class="form-control" />
                         <span asp-validation-for="Tags" class="text-danger"></span>
-                    </div>*@
+                    </div>
                     <div class="form-group">
                         <input asp-for="PublicationDate" class="form-control"/>
                         <span asp-validation-for="PublicationDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input asp-for="Content" class="form-control" />
-                        @*<textarea id="mytextarea" asp-for="Content" class="form-control">Hello, World!</textarea>
-                        <span asp-validation-for="Content" class="text-danger"></span>*@
+                        <textarea id="mytextarea" asp-for="Content" class="form-control">Hello, World!</textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="text-align:center;">
                         <input type="submit" value="Create" class="btn btn-primary" />
-                        @*<a class="btn btn-outline-primary" asp-action="Index">Voltar</a>*@
+                        <a class="btn btn-outline-primary" asp-action="Index">Voltar</a>
                     </div>
                 </form>
             </div>

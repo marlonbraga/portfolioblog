@@ -20,10 +20,5 @@ namespace marlonbraga.dev.Models {
 		public virtual List<PostTag> PostTags { get; set; }
 
 		public List<Tag> Tags { get; set; }
-
-		public Post(int idPost) {
-			IdPost = idPost;
-			Tags = new List<Tag>();
-		}
 	}
 }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using marlonbraga.dev.Models;
 using marlonbraga.dev.Models.Context;
 
-namespace marlonbraga.dev
-{
-    public class PostsController : Controller
+namespace marlonbraga.dev {
+	public class PostsController : Controller
     {
         private readonly Context _context;
 
@@ -58,7 +54,6 @@ namespace marlonbraga.dev
         {
             if (ModelState.IsValid)
             {
-                //post.PublicationDate = post.PublicationDate.Value.ToUniversalTime();
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
