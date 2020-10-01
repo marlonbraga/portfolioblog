@@ -153,6 +153,14 @@ namespace marlonbraga.dev {
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Posts.FindAsync(id);
+
+            //Delete image from wwwroot/img/headers
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "img/headers", post.TumbNail);
+			if(System.IO.File.Exists(imagePath)) {
+                System.IO.File.Delete(imagePath);
+			}
+
+            //Delete the record
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

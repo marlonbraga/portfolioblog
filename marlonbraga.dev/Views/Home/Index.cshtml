@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<marlonbraga.dev.Models.Post>
 @{
     ViewData["Title"] = "Home Page";
+    int maximunPosts = 3;
+    int posts = 0;
 }
 
 <div class="container" style="margin-top:30px">
     <div class="row">
         <div class="col-lg-8">
-            @foreach(var item in Model) {
+            @foreach(var item in Model.OrderByDescending(a => a.PublicationDate).ToList()) {
                 <a class="post" asp-controller="Posts" asp-action="Details" asp-route-id="@item.IdPost">
                     <h2>@item.Title</h2>
                     <h4>@item.Description</h4>
@@ -24,6 +26,10 @@
                     </div>
                 </a>
                 <br>
+                posts++;
+                if(posts>= maximunPosts) {
+                    break;
+                }
             }
         </div>
 

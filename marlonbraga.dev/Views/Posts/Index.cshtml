@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="d-flex flex-wrap align-content-center align-items-center">
-        @foreach(var item in Model) {
+        @foreach(var item in Model.OrderByDescending(a => a.PublicationDate).ToList()) {
         <a asp-action="Details" asp-route-id="@item.IdPost">
             <div class="card" style="width:250px">
                 <img class="card-img-top" src="/img/headers/@Html.DisplayFor(model => item.TumbNail)" alt="Card image">
@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model) {
+            @foreach(var item in Model.OrderByDescending(a => a.PublicationDate).ToList()) {
                 <tr>
                     <td>
                         <img src="/img/headers/@Html.DisplayFor(modelItem => item.TumbNail)">
