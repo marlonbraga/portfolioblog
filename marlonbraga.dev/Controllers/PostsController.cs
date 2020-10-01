@@ -4,16 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using marlonbraga.dev.Models;
 using marlonbraga.dev.Models.Context;
+using System.IO;
+using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace marlonbraga.dev {
 	public class PostsController : Controller
     {
         private readonly Context _context;
+		private readonly IWebHostEnvironment _hostEnvironment;
 
-        public PostsController(Context context)
+		public PostsController(Context context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
-        }
+			this._hostEnvironment = hostEnvironment;
+		}
 
         // GET: Posts
         public async Task<IActionResult> Index()
@@ -50,10 +55,22 @@ namespace marlonbraga.dev {
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Create([Bind("IdPost,PublicationDate,Title,ImageFile,Description,Content")] Post post)
         {
             if (ModelState.IsValid)
             {
+                //Save image to wwwroot/img/headers
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                string extension = Path.GetExtension(post.ImageFile.FileName);
+                post.TumbNail = fileName = fileName + DateTime.Now.ToString("yymmddssfff") + extension;
+                string path = Path.Combine(wwwRootPath + "/img/headers/", fileName);
+				using(var fileStream =  new FileStream (path,FileMode.Create))
+                {
+                    await post.ImageFile.CopyToAsync(fileStream);
+				}
+
+                //Insert Record
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

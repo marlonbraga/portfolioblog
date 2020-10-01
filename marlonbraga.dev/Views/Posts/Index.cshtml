@@ -5,7 +5,7 @@
         @foreach(var item in Model) {
         <a asp-action="Details" asp-route-id="@item.IdPost">
             <div class="card" style="width:250px">
-                <img class="card-img-top" src="@Html.DisplayFor(model => item.TumbNail)" alt="Card image">
+                <img class="card-img-top" src="/img/headers/@Html.DisplayFor(model => item.TumbNail)" alt="Card image">
                 <div class="card-body">
                     <h4 class="card-title">@Html.DisplayFor(model => item.Title)</h4>
                     <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
@@ -36,7 +36,7 @@
             @foreach(var item in Model) {
                 <tr>
                     <td>
-                        <img src="@Html.DisplayFor(modelItem => item.TumbNail)">
+                        <img src="/img/headers/@Html.DisplayFor(modelItem => item.TumbNail)">
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PublicationDate)
