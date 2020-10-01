@@ -10,19 +10,23 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container mt-5 mb-5">
         <h1>
             @Html.DisplayFor(model => model.Title)
         </h1>
-        <h5>
+        <h3>
             @Html.DisplayFor(model => model.Description)
-        </h5>
-        <p style="text-align:right;">
-            @Html.DisplayFor(model => model.PublicationDate)
-            <span class="badge badge-primary">C#</span>
-            <span class="badge badge-info">Design Patterns</span>
-            <span class="badge badge-dark">Entity</span>
-        </p>
+        </h3>
+        <div class="d-flex mt-5">
+            <div class="mr-auto">
+                <h5><font style="color: gray;">Publicado em:</font> @Model.PublicationDate.Value.ToLongDateString()</h5>
+            </div>
+            <div class="ml-auto">
+                <span class="badge badge-primary">C#</span>
+                <span class="badge badge-info">Design Patterns</span>
+                <span class="badge badge-dark">Entity</span>
+            </div>
+        </div>
 
         <img class="card-img-top" src="/img/headers/@Html.DisplayFor(model => model.TumbNail)" />
         <p>

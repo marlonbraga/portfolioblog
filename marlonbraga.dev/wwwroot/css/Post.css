@@ -1,8 +1,27 @@
 ﻿h1 {
     text-align: center;
 }
+h2 {
+    text-align: center;
+    color: black;
+    font-size: 1.4em;
+}
+h3 {
+    text-align: center;
+    color: gray;
+    font-size: 1.4em;
+    font-style: italic;
+}
+h4 {
+    text-align: center;
+    color: gray;
+    font-size: 1.0em;
+    font-style: italic;
+}
 h5 {
     text-align: center;
+    color: gray;
+    font-size: 1.0em;
 }
 code {
     font-family: Consolas,"courier new";
@@ -12,4 +31,42 @@ code {
     padding-left: 4px;
     padding-right: 4px;
     line-height: 1.1;
+}
+.card {
+    width: 100%;
+    margin: 25px 5px 5px 5px;
+    border-radius: 20px;
+    padding: 0px;
+    background-color: white;
+    border-radius: 20px 20px 20px 20px;
+}
+.card-header {
+    width: 100%;
+    height: 125px;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 20px 20px 0px 0px;
+    border: none;
+}
+.card-body {
+    border: none;
+}
+.card-footer {
+    border: none;
+    width: 100%;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
+    margin-bottom: 0px;
+    border-radius: 0px 0px 20px 20px;
+    padding: 0px;
+    height: 200px;
+    display: flex;
+    position: relative;
+}
+.tags {
+    padding: 0px;
+    text-align: right;
+    border: 0px;
+    margin-left: auto;
 }

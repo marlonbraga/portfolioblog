@@ -15,7 +15,6 @@ html > body {
     margin-bottom: 0px;
 }
 .postimg {
-    background-image: url("/img/Minimalist_Cities.jpg");
     background-size: cover;
     background-position-y: center;
     background-position-x: center;
@@ -39,11 +38,10 @@ html > body {
     overflow-y: hidden;
 }
     .filter-img:hover {
-        opacity: 0.8;
+        opacity: 0.9;
         padding: 20px 20px 20px 20px;
         background-image: linear-gradient(to bottom right, #FFFFFF, #DDDDDD);
         box-shadow: 0px 0px -20px #5B9BD5;
-        
         color: black;
     }
 
@@ -207,3 +205,23 @@ a {
             color: inherit;
             text-decoration: none;
         }
+.btn-marlon {
+    background-color: #5B9BD5;
+    color: white;
+    transition: box-shadow 0.5s, background-color 0.5s;
+    font-size: 1.0em;
+    font-weight: 500;
+    border: 1px solid #5B9BD5;
+    box-shadow: 0px 0px 0px #5B9BD5;
+}
+    .btn-marlon:hover {
+        box-shadow: 0px 0px 20px #5B9BD5;
+        background-color: #5B9BD5;
+        color: white;
+    }
+    .btn-marlon:active {
+        background-color: white;
+        color: #5B9BD5;
+        border: 1px solid #5B9BD5;
+   
+    }
