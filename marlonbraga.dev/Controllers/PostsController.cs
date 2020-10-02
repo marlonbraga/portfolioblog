@@ -201,6 +201,7 @@ namespace marlonbraga.dev {
                         Content = join.Content,
                         IdTag = join.IdTag,
                         Tag = t.Name,
+                        Color = t.Color,
                     }
                 )
                 .OrderByDescending(a => a.PublicationDate)
@@ -210,7 +211,7 @@ namespace marlonbraga.dev {
             AuxiliarPost.IdPost = -1;
             foreach(var postTag in query) {
                 if(postTag.IdPost != AuxiliarPost.IdPost) {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
                     AuxiliarPost = new Post();
                     AuxiliarPost.IdPost = postTag.IdPost;
                     AuxiliarPost.Tags = new List<Tag>();
@@ -222,7 +223,7 @@ namespace marlonbraga.dev {
                     AuxiliarPost.TumbNail = postTag.TumbNail;
                     Posts.Add(AuxiliarPost);
                 } else {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
                     Posts.LastOrDefault().Tags.Add(tag);
                 }
             }

@@ -12,7 +12,7 @@
                 <div class="card-body tags">
                     <h5 style="margin: 0px 2px 2px auto; font-size:0.9rem;">
                         @foreach(var tag in item.Tags) {
-                            <span class="badge badge-primary">@tag.Name</span>
+                        <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
                         }
                     </h5>
                 </div>
@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     @foreach(var tag in item.Tags) {
-                    <span class="badge badge-primary">@tag.Name</span>
+                    <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
                     }
                 </td>
                 <td>

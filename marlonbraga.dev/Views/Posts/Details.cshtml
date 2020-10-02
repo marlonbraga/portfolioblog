@@ -23,7 +23,7 @@
             </div>
             <div class="ml-auto">
                 @foreach(var tag in Model.Tags) {
-                    <span class="badge badge-primary">@tag.Name</span>
+                    <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
                 }
             </div>
         </div>

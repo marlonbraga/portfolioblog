@@ -10,12 +10,14 @@ namespace marlonbraga.dev.Models {
 		public int IdTag { get; set; }
 		[Required]
 		public string Name { get; set; }
+		public string Color { get; set; }
 		public virtual List<PostTag> PostTags { get; set; }
 		
-		public Tag(int idTag, string name)
+		public Tag(int idTag, string name, string color)
 		{
 			IdTag = idTag;
 			Name = name;
+			Color = color;
 		}
 	}
 }

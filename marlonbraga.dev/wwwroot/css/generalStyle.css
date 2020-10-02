@@ -44,7 +44,9 @@ html > body {
         box-shadow: 0px 0px -20px #5B9BD5;
         color: black;
     }
-
+.badge {
+    color: white;
+}
 .header {
     background-image: url("/img/Minimalist_Cities.jpg");
     background-size: cover;
@@ -52,7 +54,7 @@ html > body {
     background-position-x: center;
     margin-bottom: 0px;
     min-height: 30vh;
-    border-radius:0px;
+    border-radius: 0px;
 }
 
 .headerBox {

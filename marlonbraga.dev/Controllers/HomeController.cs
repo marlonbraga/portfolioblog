@@ -48,6 +48,7 @@ namespace marlonbraga.dev.Controllers {
                         Content = join.Content,
                         IdTag = join.IdTag,
                         Tag = t.Name,
+                        Color = t.Color,
                     }
                 )
                 .OrderByDescending(a => a.PublicationDate)
@@ -57,7 +58,7 @@ namespace marlonbraga.dev.Controllers {
             AuxiliarPost.IdPost = -1;
             foreach(var postTag in query) {
                 if(postTag.IdPost != AuxiliarPost.IdPost) {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
                     AuxiliarPost = new Post();
                     AuxiliarPost.IdPost = postTag.IdPost;
                     AuxiliarPost.Tags = new List<Tag>();
@@ -69,11 +70,13 @@ namespace marlonbraga.dev.Controllers {
                     AuxiliarPost.TumbNail = postTag.TumbNail;
                     Posts.Add(AuxiliarPost);
                 } else {
-                    Tag tag = new Tag(postTag.IdTag, postTag.Tag);
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
                     Posts.LastOrDefault().Tags.Add(tag);
                 }
             }
             ViewBag.Posts = Posts.Take(3);
+            List<Tag> Tags = _context.Tags.ToList();
+            ViewBag.Tags = Tags;
             return View(await _context.Posts.ToListAsync());
 		}
 

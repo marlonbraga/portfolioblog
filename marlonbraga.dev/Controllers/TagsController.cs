@@ -54,7 +54,7 @@ namespace marlonbraga.dev
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTag,Name")] Tag tag)
+        public async Task<IActionResult> Create([Bind("IdTag,Name, Color")] Tag tag)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace marlonbraga.dev
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTag,Name")] Tag tag)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTag,Name, Color")] Tag tag)
         {
             if (id != tag.IdTag)
             {
