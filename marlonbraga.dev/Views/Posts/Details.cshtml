@@ -22,9 +22,9 @@
                 <h5><font style="color: gray;">Publicado em:</font> @Model.PublicationDate.Value.ToLongDateString()</h5>
             </div>
             <div class="ml-auto">
-                <span class="badge badge-primary">C#</span>
-                <span class="badge badge-info">Design Patterns</span>
-                <span class="badge badge-dark">Entity</span>
+                @foreach(var tag in Model.Tags) {
+                    <span class="badge badge-primary">@tag.Name</span>
+                }
             </div>
         </div>
 

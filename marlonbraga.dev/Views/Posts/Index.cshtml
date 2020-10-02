@@ -2,21 +2,21 @@
     <link rel="stylesheet" href="~/css/Post.css" />
 <div class="container  mt-5 mb-5">
     <div class="d-flex flex-wrap align-content-center align-items-center">
-        @foreach(var item in Model.OrderByDescending(a => a.PublicationDate).ToList()) {
+        @foreach(var item in ViewBag.Posts) {
         <a asp-action="Details" asp-route-id="@item.IdPost" class="col-sm-4">
             <div class="card d-flex flex-wrap align-content-center align-items-center">
                 <div class="card-header align-content-center align-items-center" style="border-radius: 20px 20px 0px 0px;">
-                    <h2 class="card-title">@Html.DisplayFor(model => item.Title)</h2>
-                    <h4 class="card-text">@Html.DisplayFor(model => item.Description)</h4>
+                    <h2 class="card-title">@item.Title</h2>
+                    <h4 class="card-text">@item.Description</h4>
                 </div>
                 <div class="card-body tags">
                     <h5 style="margin: 0px 2px 2px auto; font-size:0.9rem;">
-                        <span class="badge badge-primary">C#</span>
-                        <span class="badge badge-info">Design Patterns</span>
-                        <span class="badge badge-dark">Entity</span>
+                        @foreach(var tag in item.Tags) {
+                            <span class="badge badge-primary">@tag.Name</span>
+                        }
                     </h5>
                 </div>
-                <div class="card-footer" style="border-radius: 0px 0px 20px 20px; background-image: url('/img/headers/@Html.DisplayFor(model => item.TumbNail)');">
+                <div class="card-footer" style="border-radius: 0px 0px 20px 20px; background-image: url('/img/headers/@item.TumbNail');">
                     <div class="filter-img" style="border-radius: 0px 0px 20px 20px;">
                         @Html.Raw(item.Content)
                     </div>
@@ -44,31 +44,33 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model.OrderByDescending(a => a.PublicationDate).ToList()) {
-                <tr>
-                    <td>
-                        <img src="/img/headers/@Html.DisplayFor(modelItem => item.TumbNail)" style="max-width:250px;" >
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PublicationDate)
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.IdPost">
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Content)
-                    </td>*@
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.IdPost"><i class='fas fa-newspaper'></i></a> |
-                        <a asp-action="Edit" asp-route-id="@item.IdPost"><i class='fas fa-pencil-alt'></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdPost"><i class='fas fa-trash-alt'></i></a>
-                    </td>
-                </tr>
+            @foreach(var item in ViewBag.Posts) {
+            <tr>
+                <td>
+                    <img src="/img/headers/@item.TumbNail" style="max-width:250px;">
+                </td>
+                <td>
+                    @item.PublicationDate
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.IdPost">
+                        @item.Title
+                    </a>
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @foreach(var tag in item.Tags) {
+                    <span class="badge badge-primary">@tag.Name</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.IdPost"><i class='fas fa-newspaper'></i></a> |
+                    <a asp-action="Edit" asp-route-id="@item.IdPost"><i class='fas fa-pencil-alt'></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdPost"><i class='fas fa-trash-alt'></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
