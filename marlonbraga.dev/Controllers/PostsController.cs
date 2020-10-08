@@ -48,6 +48,8 @@ namespace marlonbraga.dev {
         // GET: Posts/Create
         public IActionResult Create()
         {
+            List<Tag> Tags = _context.Tags.ToList();
+            ViewBag.Tags = Tags;
             return View();
         }
 
