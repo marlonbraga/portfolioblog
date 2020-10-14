@@ -22,6 +22,8 @@ namespace marlonbraga.dev.Models {
 		public virtual List<PostTag> PostTags { get; set; }
 
 		public List<Tag> Tags { get; set; }
+		[NotMapped]
+		public string TagsId { get; set; }
 
 		[NotMapped]
 		[DisplayName("Upload file")]

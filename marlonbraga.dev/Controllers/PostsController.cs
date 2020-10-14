@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace marlonbraga.dev {
 	public class PostsController : Controller
@@ -50,7 +51,10 @@ namespace marlonbraga.dev {
         {
             List<Tag> Tags = _context.Tags.ToList();
             ViewBag.Tags = Tags;
-            return View();
+            var m = new Post() {
+                Tags = ViewBag.Tags
+            };
+            return View(m);
         }
 
         // POST: Posts/Create
@@ -58,7 +62,7 @@ namespace marlonbraga.dev {
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPost,PublicationDate,Title,ImageFile,Description,Content")] Post post)
+        public async Task<IActionResult> Create(Post post)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +70,7 @@ namespace marlonbraga.dev {
                 string wwwRootPath = _hostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
                 string extension = Path.GetExtension(post.ImageFile.FileName);
-                post.TumbNail = fileName = fileName + DateTime.Now.ToString("yymmddssfff") + extension;
+                post.TumbNail = fileName = fileName + DateTime.Now.ToString("yyMMddssfff") + extension;
                 string path = Path.Combine(wwwRootPath + "/img/headers/", fileName);
 				using(var fileStream =  new FileStream (path,FileMode.Create))
                 {
@@ -75,6 +79,29 @@ namespace marlonbraga.dev {
 
                 //Insert Record
                 _context.Add(post);
+
+                //Get last Post Id
+                int value = int.Parse(_context.Posts
+                            .OrderByDescending(p => p.IdPost)
+                            .Select(r => r.IdPost)
+                            .First().ToString());
+
+                //"1,2,3,"   |   ""   |   "10,"
+                string[] tagsId = post.TagsId.Split(',');
+				if(tagsId.Count() > 1) {
+                    tagsId = tagsId.Take(tagsId.Count() - 1).ToArray();
+				}
+                List<PostTag> PostTags = new List<PostTag>();
+                foreach(var tag in tagsId) {
+                    PostTag postTag = new PostTag() {
+                        IdPost = post.IdPost,
+                        IdTag = Int16.Parse(tag),
+                        Post = post,
+                        Tag = null
+                    };
+                    _context.Add(postTag);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
