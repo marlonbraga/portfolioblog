@@ -147,6 +147,31 @@ namespace marlonbraga.dev {
             {
                 try
                 {
+                    //Delete old PostTags
+                    var query = _context.PostTags
+                    .Where(pt => pt.IdPost == id)
+                    .ToList();
+
+					foreach(var item in query) {
+                        _context.Remove(item);
+                    }
+
+                    //"1,2,3,"   |   ""   |   "10,"
+                    string[] tagsId = post.TagsId.Split(',');
+                    if(tagsId.Count() > 1) {
+                        tagsId = tagsId.Take(tagsId.Count() - 1).ToArray();
+                    }
+                    List<PostTag> PostTags = new List<PostTag>();
+                    foreach(var tag in tagsId) {
+                        PostTag postTag = new PostTag() {
+                            IdPost = post.IdPost,
+                            IdTag = Int16.Parse(tag),
+                            Post = post,
+                            Tag = null
+                        };
+                        _context.Add(postTag);
+                    }
+
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
