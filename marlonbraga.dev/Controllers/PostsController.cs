@@ -111,12 +111,19 @@ namespace marlonbraga.dev {
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            List<Tag> Tags = _context.Tags.ToList();
+            ViewBag.Tags = Tags;
+            var m = new Post() {
+                Tags = ViewBag.Tags
+            };
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            //var post = await _context.Posts.FindAsync(id);
+            var post = GetPostsWithTags().Find(post => post.IdPost == id);
             if (post == null)
             {
                 return NotFound();
@@ -129,7 +136,7 @@ namespace marlonbraga.dev {
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPost,PublicationDate,Title,TumbNail,Description,Content")] Post post)
+        public async Task<IActionResult> Edit(int id, Post post)
         {
             if (id != post.IdPost)
             {
