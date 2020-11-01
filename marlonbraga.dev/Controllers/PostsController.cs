@@ -9,6 +9,8 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.InteropServices;
 
 namespace marlonbraga.dev {
 	public class PostsController : Controller
@@ -148,15 +150,15 @@ namespace marlonbraga.dev {
                 try
                 {
                     //Delete old PostTags
-                    var query = _context.PostTags
+                    List<PostTag> query = _context.PostTags
                     .Where(pt => pt.IdPost == id)
                     .ToList();
 
-					foreach(var item in query) {
+					foreach(PostTag item in query) {
                         _context.Remove(item);
                     }
 
-                    //"1,2,3,"   |   ""   |   "10,"
+                    //"Add PostTags"
                     string[] tagsId = post.TagsId.Split(',');
                     if(tagsId.Count() > 1) {
                         tagsId = tagsId.Take(tagsId.Count() - 1).ToArray();
@@ -170,6 +172,26 @@ namespace marlonbraga.dev {
                             Tag = null
                         };
                         _context.Add(postTag);
+                    }
+                    Post p = _context.Posts.Find(id);
+                    if(post.ImageFile != null) {
+                        //Delete image from wwwroot/img/headers
+                        if(p.TumbNail != null) {
+                            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "img/headers", p.TumbNail);
+                            if(System.IO.File.Exists(imagePath)) {
+                                System.IO.File.Delete(imagePath);
+                            }
+                        }
+
+                        //Save image to wwwroot/img/headers
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+                        string fileName = Path.GetFileNameWithoutExtension(post.ImageFile.FileName);
+                        string extension = Path.GetExtension(post.ImageFile.FileName);
+                        post.TumbNail = fileName = fileName + DateTime.Now.ToString("yyMMddssfff") + extension;
+                        string path = Path.Combine(wwwRootPath + "/img/headers/", fileName);
+                        using(var fileStream = new FileStream(path, FileMode.Create)) {
+                            await post.ImageFile.CopyToAsync(fileStream);
+                        }
                     }
 
                     _context.Update(post);
