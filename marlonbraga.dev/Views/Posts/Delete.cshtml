@@ -32,7 +32,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TumbNail)
             <br/>
-            <img src="img\headers\@Model.TumbNail" asp-append-version="true" style="max-width:250px;"/>
+            <img src="/img/headers/@Model.TumbNail" asp-append-version="true" style="max-width:250px;"/>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
@@ -43,8 +43,8 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Content)
         </dd>
     </dl>
     
