@@ -1,0 +1,56 @@
+﻿@model IEnumerable<marlonbraga.dev.Models.Post>
+<link rel="stylesheet" href="~/css/Post.css" />
+<div class="container  mt-5 mb-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Título
+                </th>
+                <th>
+                    Descrição
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in ViewBag.Posts) {
+                <tr>
+                    <td>
+                        <img src="/img/headers/@item.TumbNail" style="max-width:250px;">
+                    </td>
+                    <td>
+                        @item.PublicationDate
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.IdPost">
+                            @item.Title
+                        </a>
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        @foreach(var tag in item.Tags) {
+                            <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.IdPost"><i class='fas fa-newspaper'></i></a> |
+                        <a asp-action="Edit" asp-route-id="@item.IdPost"><i class='fas fa-pencil-alt'></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdPost"><i class='fas fa-trash-alt'></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a type="button" class="btn btn-success" asp-action="Create">Create New</a>
+    </p>
+</div>

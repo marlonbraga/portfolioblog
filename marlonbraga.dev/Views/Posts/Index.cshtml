@@ -1,0 +1,28 @@
+﻿@model IEnumerable<marlonbraga.dev.Models.Post>
+    <link rel="stylesheet" href="~/css/Post.css" />
+<div class="container  mt-5 mb-5">
+    <div class="d-flex flex-wrap align-content-center align-items-center">
+        @foreach(var item in ViewBag.Posts) {
+        <a asp-action="Details" asp-route-id="@item.IdPost" class="col-sm-4">
+            <div class="card d-flex flex-wrap align-content-center align-items-center">
+                <div class="card-header align-content-center align-items-center" style="border-radius: 20px 20px 0px 0px;">
+                    <h2 class="card-title">@item.Title</h2>
+                    <h4 class="card-text">@item.Description</h4>
+                </div>
+                <div class="card-body tags">
+                    <h5 style="margin: 0px 2px 2px auto; font-size:0.9rem;">
+                        @foreach(var tag in item.Tags) {
+                        <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
+                        }
+                    </h5>
+                </div>
+                <div class="card-footer" style="border-radius: 0px 0px 20px 20px; background-image: url('/img/headers/@item.TumbNail');">
+                    <div class="filter-img" style="border-radius: 0px 0px 20px 20px;">
+                        @Html.Raw(item.Content)
+                    </div>
+                </div>
+            </div>
+        </a>
+        }
+    </div>
+</div>
