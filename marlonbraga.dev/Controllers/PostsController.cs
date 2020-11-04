@@ -25,8 +25,11 @@ namespace marlonbraga.dev {
 		}
 
         // GET: Posts
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
+            ViewBag.Posts = GetPostsWithTags();
+            return View(await _context.Posts.ToListAsync());
+        }
+        public async Task<IActionResult> Administration() {
             ViewBag.Posts = GetPostsWithTags();
             return View(await _context.Posts.ToListAsync());
         }
