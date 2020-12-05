@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using marlonbraga.dev.Models;
 using marlonbraga.dev.Models.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace marlonbraga.dev.Controllers {
 	public class HomeController:Controller {
@@ -80,15 +83,63 @@ namespace marlonbraga.dev.Controllers {
             return View(await _context.Posts.ToListAsync());
 		}
 
-		public IActionResult Privacy() {
-			return View();
-		}
+        public IActionResult Sobre() {
+            return View();
+        }
+        
+        public IActionResult Login(string User, string Password) {
+            if((User == "Marlon Braga") && (ComparaMD5(Password, "fdb05cf0bfab1b69c5622fcf29dff7c6"))) {
+                //TODO: Mensagem de Bem-Vindo, Sr. Marlon.
+                HttpContext.Session.SetString("user", "Marlon Braga");
+                return RedirectToAction("Administration","Posts");
+            } else {
+                //TODO: Mensagem de senha incorreta
+			}
+            return View();
+        }
+        public IActionResult Logout() {
+            HttpContext.Session.SetString("user", "");
+            HttpContext.Session.Remove("user");
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+        private string RetornarMD5(string Senha) {
+            using(MD5 md5Hash = MD5.Create()) {
+                return RetonarHash(md5Hash, Senha);
+            }
+        }
+        private bool ComparaMD5(string senhabanco, string Senha_MD5) {
+            using(MD5 md5Hash = MD5.Create()) {
+                var senha = RetornarMD5(senhabanco);
+                if(VerificarHash(Senha_MD5, senha)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        private string RetonarHash(MD5 md5Hash, string input) {
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-		public IActionResult Sobre() {
-			return View();
-		}
+            StringBuilder sBuilder = new StringBuilder();
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            for(int i = 0; i < data.Length; i++) {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
+        }
+        private bool VerificarHash(string input, string hash) {
+            StringComparer compara = StringComparer.OrdinalIgnoreCase;
+
+            if(0 == compara.Compare(input, hash)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error() {
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}

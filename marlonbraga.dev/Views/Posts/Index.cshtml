@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<marlonbraga.dev.Models.Post>
-    <link rel="stylesheet" href="~/css/Post.css" />
+<link rel="stylesheet" href="~/css/Post.css" />
 <div class="container  mt-5 mb-5">
     <div class="d-flex flex-wrap align-content-center align-items-center">
-        @foreach(var item in ViewBag.Posts) {
+       @foreach(var item in ViewBag.Posts) {
         <a asp-action="Details" asp-route-id="@item.IdPost" class="col-sm-4">
             <div class="card d-flex flex-wrap align-content-center align-items-center">
                 <div class="card-header align-content-center align-items-center" style="border-radius: 20px 20px 0px 0px;">
@@ -12,7 +12,7 @@
                 <div class="card-body tags">
                     <h5 style="margin: 0px 2px 2px auto; font-size:0.9rem;">
                         @foreach(var tag in item.Tags) {
-                        <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
+                        <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
                         }
                     </h5>
                 </div>

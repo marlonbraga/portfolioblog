@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/CreateAndEdit.css" />
+    <style>
+        .alert-mensages {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            animation-name: alert-msg;
+            animation-duration: 7s;
+            display: none;
+        }
+        @@-webkit-keyframes alert-msg {
+            0% {opacity: 0;}
+            15% {opacity: 1;}
+            85% {opacity: 1;}
+            100% {opacity: 0;}
+        }
+        @@keyframes alert-msg {
+            0% {opacity: 0;}
+            15% {opacity: 1;}
+            85% {opacity: 1;}
+            100% {opacity: 0;}
+        }
+    </style>
+</head>
+<body>
+    <div class="alert alert-success alert-dismissible alert-mensages">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Acesso efetuado com sucesso!</strong> Login realizado com sucesso.
+    </div>
+    <div class="alert alert-danger alert-dismissible alert-mensages">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Acesso negado.</strong> Falha de login. Senha inválida.
+    </div>
+    <div class="container mt-5">
+        <form asp-action="Login" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-12 mt-xl-5" style="height:100px;"></div>
+            </div>
+            <div class="row" style="max-width: 400px; margin: auto;">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <input id="User" name="User" type="hidden" class="h1 form-control" value="Marlon Braga" />
+                        @*<span asp-validation-for="User" class="text-danger"></span>*@
+                        Marlon Braga
+                    </div>
+                    <div class="form-group">
+                        <input asp-route-id="Password" name="Password" type="password" class="h3 form-control" value="******" />
+                        @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group" style="text-align:center;">
+                        <input type="submit" value="Login" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mt-xl-5" style="height:250px;"></div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

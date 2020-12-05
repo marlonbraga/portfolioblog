@@ -38,13 +38,13 @@
                     </td>
                     <td>
                         @foreach(var tag in item.Tags) {
-                            <span class="badge" style="background-color:@tag.Color">@tag.Name</span>
+                            <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
                         }
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.IdPost"><i class='fas fa-newspaper'></i></a> |
-                        <a asp-action="Edit" asp-route-id="@item.IdPost"><i class='fas fa-pencil-alt'></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdPost"><i class='fas fa-trash-alt'></i></a>
+                        <a asp-action="Details" asp-route-id="@item.IdPost"data-toggle="tooltip" data-placement="top" title="Login necessário"><i class='fas fa-newspaper'></i></a> |
+                        <a asp-action="Edit" asp-route-id="@item.IdPost"   data-toggle="tooltip" data-placement="top" title="Login necessário"><i class='fas fa-pencil-alt'></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdPost" data-toggle="tooltip" data-placement="top" title="Login necessário"><i class='fas fa-trash-alt'></i></a>
                     </td>
                 </tr>
             }

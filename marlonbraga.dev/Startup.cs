@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql;
+using Microsoft.AspNetCore.Http;
 
 namespace marlonbraga.dev {
 	public class Startup {
@@ -22,6 +23,8 @@ namespace marlonbraga.dev {
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Adicione eessa linha para que seu projeto volte a funcionar normalmente.
+			services.AddSession();
 
 			services.AddDbContext<Context>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -39,7 +42,7 @@ namespace marlonbraga.dev {
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-
+			app.UseSession();
 			app.UseRouting();
 
 			app.UseAuthorization();

@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    //string user = HttpContext.Session.GetString("user");
+    string user = HttpContextAccessor.HttpContext.Session.GetString("user");
+}
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -48,6 +54,26 @@
                         <li class="nav-item">
                             <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Sobre">SOBRE MIM</a>
                         </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="margin-left:auto;">
+                        @if(user != "Marlon Braga") {
+                            <li class="nav-item">
+                                <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Login">
+                                    <i class='fas fa-user-circle'></i> Login
+                                </a>
+                            </li>
+                        } else {
+                            <li @*class="nav-item"*@>
+                                <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Sobre">
+                                    <i class='fas fa-smile'></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Logout">
+                                    <i class='fas fa-sign-out-alt'></i> Logout
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </nav>

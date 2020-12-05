@@ -7,6 +7,7 @@ using marlonbraga.dev.Models.Context;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -23,6 +24,10 @@ namespace marlonbraga.dev {
             _context = context;
 			this._hostEnvironment = hostEnvironment;
 		}
+
+        private bool CheckUser() {
+            return HttpContext.Session.GetString("user") == "Marlon Braga";
+        }
 
         // GET: Posts
         public async Task<IActionResult> Index() {
@@ -54,6 +59,9 @@ namespace marlonbraga.dev {
         // GET: Posts/Create
         public IActionResult Create()
         {
+			if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             List<Tag> Tags = _context.Tags.ToList();
             ViewBag.Tags = Tags;
             var m = new Post() {
@@ -69,6 +77,9 @@ namespace marlonbraga.dev {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post)
         {
+            if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 //Save image to wwwroot/img/headers
@@ -116,6 +127,9 @@ namespace marlonbraga.dev {
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             List<Tag> Tags = _context.Tags.ToList();
             ViewBag.Tags = Tags;
             var m = new Post() {
@@ -143,6 +157,9 @@ namespace marlonbraga.dev {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Post post)
         {
+            if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             if (id != post.IdPost)
             {
                 return NotFound();
@@ -219,6 +236,9 @@ namespace marlonbraga.dev {
         // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -239,6 +259,9 @@ namespace marlonbraga.dev {
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if(!CheckUser()) {
+                return RedirectToAction("Login", "Home");
+            }
             var post = await _context.Posts.FindAsync(id);
 
             //Delete image from wwwroot/img/headers
