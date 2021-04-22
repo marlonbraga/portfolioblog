@@ -28,15 +28,9 @@
     </style>
 </head>
 <body>
-    <div class="jumbotron text-center header">
-        <div class="headerBox">
-            <h1>MARLON BRAGA</h1>
-            <p>Desenvolvedor de software</p>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark sticky-top" style="top: -1px;">
-        <div class="container bg-dark">
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <div class="container-fluid bg-dark-alpha sticky-top" style="top: -1px;">
+        <div class="container">
+            <nav class="navbar navbar-expand-sm navbar-dark sticky-top">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -46,7 +40,7 @@
                             <a class="nav-link navMain" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link navMain disabled" asp-area="" asp-controller="Posts" asp-action="Index">PROJETOS</a>
+                            <a class="nav-link navMain" asp-area="" asp-controller="Posts" asp-action="Projetos">PROJETOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link navMain" asp-area="" asp-controller="Posts" asp-action="Index">BLOG</a>
@@ -79,12 +73,11 @@
             </nav>
         </div>
     </div>
-    <div class="">
+    <div class="" style="background-color: white;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <div class="footer border-top footer text-muted">
         <div class="container" style="padding: 100px 0px 30px 0px;">
             <div class="row">
@@ -102,7 +95,7 @@
                                     <a class="footerIcon" href="tel:+55(21)995009727"><i class='fab fa-whatsapp'></i></a>
                                 </td>
                                 <td class="left">
-                                    <a class="footer-link" href="tel:+55(21)995009727"><text class="notas">+55(21)</text> 995 009 727</a>
+                                    <a class="footer-link" href="tel:+55(21)995009727"><text class="notas" style="float:none;">+55(21)</text> 995 009 727</a>
                                 </td>
                             </tr>
                         </table>

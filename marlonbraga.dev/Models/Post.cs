@@ -18,6 +18,7 @@ namespace marlonbraga.dev.Models {
 		public string TumbNail { get; set; }
 		public string Description { get; set; }
 		public string Content { get; set; }
+		public string VideoLink { get; set; }
 
 		public virtual List<PostTag> PostTags { get; set; }
 

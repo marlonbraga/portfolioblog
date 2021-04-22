@@ -7,13 +7,15 @@
     font-family: 'Neuropol';
     src: url('/fonts/neuropol.ttf') format('truetype');
 }
-
-html > body {
-    background-color: white;
-    color: #000000;
-    font-size: 1.2em;
-    margin-bottom: 0px;
+html {
+    scroll-behavior: smooth;
 }
+    html > body {
+        background-color: #000000;
+        color: #000000;
+        font-size: 1.2em;
+        margin-bottom: 0px;
+    }
 .postimg {
     background-size: cover;
     background-position-y: center;
@@ -24,12 +26,15 @@ html > body {
     display: flex;
     position: relative;
 }
+.bg-dark-alpha {
+    background: #000000de;
+}
 .filter-img {
     content: "";
-    background-image: linear-gradient(to bottom right, #FFFFFF, #5B9BD5);
+    background-image: linear-gradient(to bottom right, #FFFFFF, #DDDDDD);
     width: 100%;
     height: 100%;
-    opacity: 0.2;
+    opacity: 0.0;
     position: absolute;
     border-radius: 20px;
     transition-duration: 1s;
@@ -37,6 +42,7 @@ html > body {
     padding: 50px 20px 20px 20px;
     overflow-y: hidden;
 }
+
     .filter-img:hover {
         opacity: 0.9;
         padding: 20px 20px 20px 20px;
@@ -53,16 +59,18 @@ html > body {
     background-position-y: center;
     background-position-x: center;
     margin-bottom: 0px;
-    min-height: 30vh;
+    min-height: 100vh;
     border-radius: 0px;
 }
 
 .headerBox {
     background-image: url("/img/transparentBlack-75.png");
     border: black solid 5px;
-    border-radius: 00px;
+    border-radius: 5px;
     box-shadow: 0px 0px 20px #5B9BD5;
     margin: auto;
+    margin-top: 30vh;
+    margin-bottom: 25vh;
     padding: 10px 50px;
     width: fit-content;
 }
@@ -83,13 +91,13 @@ html > body {
 h3 {
     color: black;
     font-family: Berlin;
-    font-size: 1.4em;
+    font-size: 1.5em;
 }
 
 h4 {
     color: black;
     font-family: Berlin;
-    font-size: 1.1em;
+    font-size: 1.3em;
 }
 
 h5 {
@@ -163,7 +171,7 @@ td {
 .blueFont {
     color: #5B9BD5;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.0em;
 }
 
 

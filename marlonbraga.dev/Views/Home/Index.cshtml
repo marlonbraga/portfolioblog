@@ -2,82 +2,99 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8">
-                @foreach(var item in ViewBag.Posts) {
-                    <div class="mb-5">
-                        <a class="post" asp-controller="Posts" asp-action="Details" asp-route-id="@item.IdPost">
-                            <h2>@item.Title</h2>
-                            <h4>@item.Description</h4>
-                            <div class="d-flex mt-3">
-                                <div class="mr-auto">
-                                    <h5><font style="color: gray;">Publicado em:</font> @item.PublicationDate.ToLongDateString()</h5>
-                                </div>
-                                <div class="ml-auto">
-                                    @foreach(var tag in item.Tags) {
-                                        <a asp-controller="Posts" asp-action="Index">
-                                            <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
-                                        </a>
-                                    }
-                                </div>
-                            </div>
-                            <div style="background-image: url('/img/headers/@item.TumbNail');" class="postimg">
-                                <div class="filter-img">
-                                    @Html.Raw(item.Content)
-                                </div>
-                            </div>
-                        </a>
+<div class="jumbotron text-center header">
+    <div class="headerBox">
+        <h1>MARLON BRAGA</h1>
+        <p>Desenvolvedor de software</p>
+    </div>
+    <a href="#s1" style="
+            font-size: xxx-large;
+            text-shadow: 0px 0px 10px #5B9BD5;
+            transition: all 1.0s;
+            ">
+        <i class="fas fa-angle-double-down"></i>
+    </a>
+    <div id="s1"></div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            @foreach(var item in ViewBag.Posts) {
+            <div class="mb-5">
+                <a class="post" asp-controller="Posts" asp-action="Details" asp-route-id="@item.IdPost">
+                    <h2>@item.Title</h2>
+                    <h4>@item.Description</h4>
+                </a>
+                <div class="d-flex mt-3">
+                    <div class="mr-auto">
+                        <h5><font style="color: gray;">Publicado em:</font> @item.PublicationDate.ToLongDateString()</h5>
                     </div>
-                    <br>
-                }
-                <div class="d-flex mb-5">
-                    <a class="mx-auto" asp-controller="Posts" asp-action="Index">
-                        <button class="btn-lg btn-marlon mx-auto">Ver mais</button>
-                    </a>
+                    <div class="ml-auto">
+                        @foreach(var tag in item.Tags) {
+                            <a asp-controller="Posts" asp-action="Index" asp-route-id="@tag.IdTag">
+                                <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
+                            </a>
+                        }
+                    </div>
                 </div>
-                <br>
-                <br>
-                <hr />
+                <a class="post" asp-controller="Posts" asp-action="Details" asp-route-id="@item.IdPost">
+                    <div style="background-image: url('/img/headers/@item.TumbNail');" class="postimg">
+                        <div class="filter-img">
+                            @Html.Raw(item.Content)
+                        </div>
+                    </div>
+                </a>
+
             </div>
+                <br>
+            }
+            <div class="d-flex mb-5">
+                <a class="mx-auto" asp-controller="Posts" asp-action="Index">
+                    <button class="btn-lg btn-marlon mx-auto">Ver mais</button>
+                </a>
+            </div>
+            <br>
+            <br>
             <hr />
-            <div class="col-lg-4" style="padding-left: 70px; padding-right: 0px;">
-                <h3>Sobre mim</h3>
-                <div>
-                    <img style="min-width: 210px; object-fit: cover; max-width:-webkit-fill-available; padding: 0px 35px 0px 0px;" src="~/img/Marlon Braga 2020 squere outline.png">
-                </div>
-                <p>Olá! Eu sou Marlon, Desenvolvedor de software. Este é meu espaço para compartilhar um pouco do que tenho aprendido. Seja Bem-vindo!</p>
-                <hr>
-                <h3>Projetos</h3>
-                <p>Programas em produção</p>
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Posts" asp-action="Administration">
-                            <i class='fas fa-pen-alt'></i>
-                            Blog manager
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="https://dmbot.marlonbraga.dev">
-                            <i class='fas fa-dice-d20'></i>
-                            DM Chatbot
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="https://phototour.marlonbraga.dev">
-                            <i class='fas fa-images'></i>
-                            Photo Tour
-                        </a>
-                    </li>
-                </ul>
-                <hr>
-                <h3>Assuntos</h3>
-                @foreach(var tag in ViewBag.Tags) {
-                    <a asp-controller="Posts" asp-action="Index">
-                        <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
-                    </a>
-                }
-                <hr class="d-sm-none">
-            </div>
         </div>
+        <hr />
+        <div class="col-lg-4" style="padding-left: 70px; padding-right: 0px;">
+            <h3>Sobre mim</h3>
+            <div>
+                <img style="min-width: 210px; object-fit: cover; max-width:-webkit-fill-available; padding: 0px 35px 0px 0px;" src="~/img/Marlon Braga 2020 squere outline.png">
+            </div>
+            <p>Olá! Eu sou Marlon, Desenvolvedor de software. Este é meu espaço para compartilhar um pouco do que tenho aprendido. Seja Bem-vindo!</p>
+            <hr>
+            <h3>Projetos</h3>
+            <p>Programas em produção</p>
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Posts" asp-action="Administration">
+                        <i class='fas fa-pen-alt'></i>
+                        Blog manager
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="https://dmbot.marlonbraga.dev">
+                        <i class='fas fa-dice-d20'></i>
+                        DM Chatbot
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="https://phototour.marlonbraga.dev">
+                        <i class='fas fa-images'></i>
+                        Photo Tour
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <h3>Assuntos</h3>
+            @foreach(var tag in ViewBag.Tags) {
+                <a asp-controller="Posts" asp-action="Index" asp-route-id="@tag.IdTag">
+                    <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
+                </a>
+            }
+            <hr class="d-sm-none">
+        </div>
+    </div>
+</div>

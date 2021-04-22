@@ -1,5 +1,9 @@
 ﻿@model marlonbraga.dev.Models.Post
-
+@{
+    int FHDWidth(int height) {
+        return height * 16 / 9;
+    }
+}
 <!DOCTYPE html>
 
 <html>
@@ -9,7 +13,13 @@
     <link rel="stylesheet" href="~/css/Post.css" />
 </head>
 <body>
-
+    @if(Model.VideoLink != null) {
+        <div style="text-align: center;">
+            <iframe class="center" width="700" height="395" src="@Html.DisplayFor(model => model.VideoLink)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    } else {
+        <div class="DatailsHeader" style="background-image: url('/img/headers/@Html.DisplayFor(model => model.TumbNail)');"></div>
+    }
     <div class="container mt-5 mb-5">
         <h1>
             @Html.DisplayFor(model => model.Title)
@@ -23,12 +33,12 @@
             </div>
             <div class="ml-auto">
                 @foreach(var tag in Model.Tags) {
-                    <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
+                    <a asp-controller="Posts" asp-action="Index" asp-route-id="@tag.IdTag">
+                        <span class="badge" style="background-color:#5B9BD5">@tag.Name</span>
+                    </a>
                 }
-            </div>
+                </div>
         </div>
-
-        <img class="card-img-top" src="/img/headers/@Html.DisplayFor(model => model.TumbNail)" />
         <p>
             @Html.Raw(Model.Content)
         </p>

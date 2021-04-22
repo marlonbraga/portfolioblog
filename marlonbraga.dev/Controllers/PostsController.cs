@@ -30,8 +30,16 @@ namespace marlonbraga.dev {
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index() {
-            ViewBag.Posts = GetPostsWithTags();
+        public async Task<IActionResult> Index(int? id) {
+            if(id == null) {
+                ViewBag.Posts = GetPostsWithTags();
+			} else {
+                ViewBag.Posts = GetPostsWhereTag((int)id);
+            }
+            return View(await _context.Posts.ToListAsync());
+        }
+        public async Task<IActionResult> Projetos() {
+            ViewBag.Posts = GetPostsWhereTag(1);
             return View(await _context.Posts.ToListAsync());
         }
         public async Task<IActionResult> Administration() {
@@ -292,6 +300,7 @@ namespace marlonbraga.dev {
                         PublicationDate = p.PublicationDate,
                         Title = p.Title,
                         TumbNail = p.TumbNail,
+                        VideoLink = p.VideoLink,
                         Description = p.Description,
                         Content = p.Content,
                         IdTag = pt.IdTag
@@ -306,13 +315,14 @@ namespace marlonbraga.dev {
                         PublicationDate = join.PublicationDate,
                         Title = join.Title,
                         TumbNail = join.TumbNail,
+                        VideoLink = join.VideoLink,
                         Description = join.Description,
                         Content = join.Content,
                         IdTag = join.IdTag,
                         Tag = t.Name,
                         Color = t.Color,
                     }
-                )
+                ).Where(a => a.IdTag != 1)
                 .OrderByDescending(a => a.PublicationDate)
                 .ToList();
             List<Post> Posts = new List<Post>();
@@ -330,6 +340,7 @@ namespace marlonbraga.dev {
                     AuxiliarPost.Title = postTag.Title;
                     AuxiliarPost.PublicationDate = postTag.PublicationDate;
                     AuxiliarPost.TumbNail = postTag.TumbNail;
+                    AuxiliarPost.VideoLink = postTag.VideoLink;
                     Posts.Add(AuxiliarPost);
                 } else {
                     Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
@@ -337,6 +348,71 @@ namespace marlonbraga.dev {
                 }
             }
             return Posts;
-		}
+        }
+        private List<Post> GetPostsWhereTag(int tagNumber) {
+            var query = _context.PostTags
+                .Join(
+                    _context.Posts,
+                    pt => pt.IdPost,
+                    p => p.IdPost,
+                    (pt, p) => new {
+                        IdPost = p.IdPost,
+                        PublicationDate = p.PublicationDate,
+                        Title = p.Title,
+                        TumbNail = p.TumbNail,
+                        VideoLink = p.VideoLink,
+                        Description = p.Description,
+                        Content = p.Content,
+                        IdTag = pt.IdTag
+                    }
+                )
+                .Join(
+                    _context.Tags,
+                    join => join.IdTag,
+                    t => t.IdTag,
+                    (join, t) => new {
+                        IdPost = join.IdPost,
+                        PublicationDate = join.PublicationDate,
+                        Title = join.Title,
+                        TumbNail = join.TumbNail,
+                        VideoLink = join.VideoLink,
+                        Description = join.Description,
+                        Content = join.Content,
+                        IdTag = join.IdTag,
+                        Tag = t.Name,
+                        Color = t.Color,
+                    }
+                ).Where(a => a.IdTag == tagNumber)
+                .OrderByDescending(a => a.PublicationDate)
+                .ToList();
+            List<Post> Posts = new List<Post>();
+            Post AuxiliarPost = new Post();
+            AuxiliarPost.IdPost = -1;
+            foreach(var postTag in query) {
+                if(postTag.IdPost != AuxiliarPost.IdPost) {
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
+                    AuxiliarPost = new Post();
+                    AuxiliarPost.IdPost = postTag.IdPost;
+                    AuxiliarPost.Tags = new List<Tag>();
+                    AuxiliarPost.Tags.Add(tag);
+                    AuxiliarPost.Description = postTag.Description;
+                    AuxiliarPost.Content = postTag.Content;
+                    AuxiliarPost.Title = postTag.Title;
+                    AuxiliarPost.PublicationDate = postTag.PublicationDate;
+                    AuxiliarPost.TumbNail = postTag.TumbNail;
+                    AuxiliarPost.VideoLink = postTag.VideoLink;
+                    Posts.Add(AuxiliarPost);
+                } else {
+                    Tag tag = new Tag(postTag.IdTag, postTag.Tag, postTag.Color);
+                    Posts.LastOrDefault().Tags.Add(tag);
+                }
+            }
+            return FilterPostsByTags(Posts);
+        }
+        private List<Post> FilterPostsByTags(List<Post> posts) {
+            //verificar post sem tags projetos
+            //excluir posts sem tag projetos
+            return posts;
+        }
     }
 }

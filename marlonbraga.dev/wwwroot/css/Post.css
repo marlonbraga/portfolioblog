@@ -70,3 +70,9 @@ code {
     border: 0px;
     margin-left: auto;
 }
+.DatailsHeader {
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
+    height: 30vh;
+}
